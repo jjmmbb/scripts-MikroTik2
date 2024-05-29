@@ -1,0 +1,5 @@
+/system package update
+set channel=stable
+check-for-updates once
+:delay 3s;
+:if ( [get status] = "New version is available") do={ install }
