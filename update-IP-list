@@ -1,0 +1,36 @@
+:foreach dnscache in=[/ip dns cache find] do={
+		:local dnscacheVal [/ip dns cache get $dnscache] ;
+		:local dnscacheName ($dnscacheVal->"name");
+		:local dnscacheData ($dnscacheVal->"data");
+		:local dnscacheType ($dnscacheVal->"type");
+
+	# List Facebook IP
+			:if ( $dnscacheName ~"(facebook|fbcdn|fbsbx|fbwat.ch|fb.watch|messenger.com|m.me)" ) do={
+				:if ( $dnscacheType="A" ) do={
+					:do {/ip/firewall/address-list/add list="facebook" address=$dnscacheData timeout=01:00:00} on-error={ };
+					}
+				:if ( $dnscacheType="CNAME" ) do={
+					:do {/ip/firewall/address-list/add list="facebook" address=$dnscacheName timeout=01:00:00} on-error={ };
+					}
+				}
+			
+	# List YouTube IP
+			:if ( $dnscacheName ~"(youtube|googlevideo.com|ytimg|youtu.be)" ) do={
+				:if ( $dnscacheType="A" ) do={
+					:do {/ip/firewall/address-list/add list="youtube" address=$dnscacheData timeout=01:00:00} on-error={ };
+					}
+				:if ( $dnscacheType="CNAME" ) do={
+					:do {/ip/firewall/address-list/add list="youtube" address=$dnscacheName timeout=01:00:00} on-error={ };
+					}
+				}
+				
+	# List TikTok IP
+			:if ( $dnscacheName ~"(tiktok|tiktokv|tiktokcdn|ibyteimg.com)" ) do={
+				:if ( $dnscacheType="A" ) do={
+					:do {/ip/firewall/address-list/add list="tiktok" address=$dnscacheData timeout=01:00:00} on-error={ };
+					}
+				:if ( $dnscacheType="CNAME" ) do={
+					:do {/ip/firewall/address-list/add list="tiktok" address=$dnscacheName timeout=01:00:00} on-error={ };
+					}
+				}
+}
