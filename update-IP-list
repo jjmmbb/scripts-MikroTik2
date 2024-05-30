@@ -15,7 +15,7 @@
 				}
 			
 	# List YouTube IP
-			:if ( $dnscacheName ~"(youtube|googlevideo.com|googleapis.com|ytimg|youtu.be)" ) do={
+			:if ( $dnscacheName ~"(youtube|googlevideo.com|ytimg.com|youtu.be)" ) do={
 				:if ( $dnscacheType="A" ) do={
 					:do {/ip/firewall/address-list/add list="youtube" address=$dnscacheData timeout=01:00:00} on-error={ };
 					}
